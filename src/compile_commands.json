@@ -1,0 +1,26 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-c",
+      "-o",
+      "main",
+      "main.c"
+    ],
+    "directory": "/home/bartosz/projects/SimpleSDL3Platformer/src",
+    "file": "/home/bartosz/projects/SimpleSDL3Platformer/src/main.c",
+    "output": "/home/bartosz/projects/SimpleSDL3Platformer/src/main"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-c",
+      "-o",
+      "main",
+      "player.c"
+    ],
+    "directory": "/home/bartosz/projects/SimpleSDL3Platformer/src",
+    "file": "/home/bartosz/projects/SimpleSDL3Platformer/src/player.c",
+    "output": "/home/bartosz/projects/SimpleSDL3Platformer/src/main"
+  }
+]
