@@ -1,4 +1,4 @@
-//Header for player.c file
+//Header for player
 #ifndef PLAYER_H
 #define PLAYER_H
 

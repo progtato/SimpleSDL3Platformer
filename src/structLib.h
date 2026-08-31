@@ -1,4 +1,4 @@
-//Header file for command structs that will be ysed across the program.
+//Header file for comman structs that will be used across the program.
 #ifndef STRUCTLIB_H
 #define STRUCTLIB_H
 
