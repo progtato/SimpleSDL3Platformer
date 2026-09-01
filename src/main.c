@@ -14,48 +14,53 @@
 #define GAME_OVER = 0;
 static SDL_Window* window;
 static SDL_Renderer* renderer;
+static Scene sceneOne;
+static Player player;
 
 
 //Function Definitions
+Scene loadScene();
+void setPlayer();
+
 //SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[]){
 SDL_AppResult SDL_AppInit(void **appstate, int argc, char *argv[]){
 
-	if (!SDL_SetAppMetadata("Test 1", "0.1", "wwwSMT")){
+	if (!SDL_SetAppMetadata("Simple SDL3 Platformer", "0.1", "wwwSMT")){
 		return SDL_APP_FAILURE;
 	}
-	
-
-	if (!SDL_CreateWindowAndRenderer("examples/renderer/clear", 640, 480, SDL_WINDOW_RESIZABLE, &window, &renderer)) {
+	if (!SDL_CreateWindowAndRenderer("Simple SDL3 Platformer", 640, 480, SDL_WINDOW_RESIZABLE, &window, &renderer)) {
         	SDL_Log("Couldn't create window/renderer: %s", SDL_GetError());
         	return SDL_APP_FAILURE;
     	}
     	SDL_SetRenderLogicalPresentation(renderer, 640, 480, SDL_LOGICAL_PRESENTATION_LETTERBOX);
 
+	
+	sceneOne = loadScene();
+	setPlayer();
+
 	return SDL_APP_CONTINUE;
 }
 
-SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event)
-{
+SDL_AppResult SDL_AppEvent(void *appstate, SDL_Event *event) {
     if (event->type == SDL_EVENT_QUIT) {
         return SDL_APP_SUCCESS;  /* end the program, reporting success to the OS. */
     }
     return SDL_APP_CONTINUE;  /* carry on with the program! */
 }
 
-SDL_AppResult SDL_AppIterate(void *appstate)
-{
-    const double now = ((double)SDL_GetTicks()) / 1000.0;  /* convert from milliseconds to seconds. */
+SDL_AppResult SDL_AppIterate(void *appstate) {
+    //const double now = ((double)SDL_GetTicks()) / 1000.0;  /* convert from milliseconds to seconds. */
     /* choose the color for the frame we will draw. The sine wave trick makes it fade between colors smoothly. */
-    const float red = (float) (0.5 + 0.5 * SDL_sin(now));
-    const float green = (float) (0.5 + 0.5 * SDL_sin(now + SDL_PI_D * 2 / 3));
-    const float blue = (float) (0.5 + 0.5 * SDL_sin(now + SDL_PI_D * 4 / 3));
-    SDL_SetRenderDrawColorFloat(renderer, red, green, blue, SDL_ALPHA_OPAQUE_FLOAT);  /* new color, full alpha. */
-
+  //  const float red = (float) (0.5 + 0.5 * SDL_sin(now));
+    //const float green = (float) (0.5 + 0.5 * SDL_sin(now + SDL_PI_D * 2 / 3));
+    //const float blue = (float) (0.5 + 0.5 * SDL_sin(now + SDL_PI_D * 4 / 3));
+    //SDL_SetRenderDrawColorFloat(renderer, red, green, blue, SDL_ALPHA_OPAQUE_FLOAT);  /* new color, full alpha. */
+	
     /* clear the window to the draw color. */
-    SDL_RenderClear(renderer);
-
+    //SDL_RenderClear(renderer);
+    renderCurrentFrame(&sceneOne, renderer);
     /* put the newly-cleared rendering on the screen. */
-    SDL_RenderPresent(renderer);
+    //SDL_RenderPresent(renderer);
 
     return SDL_APP_CONTINUE;  /* carry on with the program! */
 }
@@ -64,3 +69,28 @@ void SDL_AppQuit(void *appstate, SDL_AppResult result)
 {
     /* SDL will clean up the window/renderer for us. */
 }
+
+
+Scene loadScene(){
+	Object obj;
+	I2Vect tempDim = {2,2};
+	F2Vect tempOffSet = {1.0,1.0};
+	Collision coll = {tempDim, tempOffSet};
+	Context ctx = {tempDim, tempOffSet, 100, 100, SOLID};
+	F2Vect temp = {2.0,2.0};
+	obj.id = 0;
+	obj.loc = temp;
+	obj.objType = TERRAIN;
+	Scene scene;
+	scene.objArr = &obj;
+	scene.size = 1;
+	return scene;
+};
+
+void setPlayer(){
+	player.objId = 1;
+	player.state = GROUND;
+	player.velocity = (F2Vect) {2.0,2.0};
+	player.key = NULL;
+}
+

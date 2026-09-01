@@ -6,8 +6,10 @@
 typedef enum {
 	PLAYER,
 	TERRAIN,
+	SPIKE,
+	PLATFORM,
 	BOUND_BOX,
-	SPAWNER,
+	CHECKPOINT,
 	FLAG,
 	CAMERA
 } ObjectType;
@@ -20,6 +22,11 @@ typedef enum {
 	AIR_DASH,
 	AIR_DJUMP
 } PlayerState;
+
+typedef enum {
+	SOLID,
+	BORDER
+} Style;
 
 //Structs
 
@@ -51,15 +58,16 @@ typedef struct {
 
 //Collision struct to contain collsion information for the physics engine
 typedef struct{
-	I2Vect dimesions;
+	I2Vect dimesion;
 	F2Vect offset;
 } Collision;
 //Context struct to contain context information for the renderer
 typedef struct{
-	I2Vect dimesions;
+	I2Vect dimesion;
 	F2Vect offset;
 	int colour;
 	int alpha;
+	Style style;
 } Context;
 
 //Represents a singular object
@@ -76,6 +84,7 @@ typedef struct{
 	Object* objArr;
 	int size;
 } Scene;
+
 
 typedef struct {
 	int objId; //Its id number in the Scene struct
