@@ -1,31 +1,34 @@
 //Header file for comman structs that will be used across the program.
 #ifndef STRUCTLIB_H
 #define STRUCTLIB_H
-
+#include <SDL3/SDL_rect.h>
 //Enums
 typedef enum {
-	PLAYER,
-	TERRAIN,
-	SPIKE,
-	PLATFORM,
+	BACKGROUND,
 	BOUND_BOX,
+	CAMERA,
 	CHECKPOINT,
 	FLAG,
-	CAMERA
+	FOREGROUND,
+	ITEM,
+	PLATFORM,
+	PLAYER,
+	SPIKE,
+	TERRAIN
 } ObjectType;
 
 typedef enum {
-	GROUND,
-	ON_WALL,
 	AIR,
-	AIR_DASH_DJUMP,
 	AIR_DASH,
-	AIR_DJUMP
+	AIR_DJUMP,
+	AIR_DASH_DJUMP,
+	GROUND,
+	ON_WALL
 } PlayerState;
 
 typedef enum {
-	SOLID,
-	BORDER
+	BORDER,
+	SOLID
 } Style;
 
 //Structs
@@ -45,9 +48,9 @@ typedef struct {
 //User input frame
 typedef struct {
 	I2Vect dir;
-	int jump;
 	int dash;
 	int escape;
+	int jump;
 } Input;
 
 //Key
@@ -56,41 +59,35 @@ typedef struct {
 	int  value;
 } Key;
 
-//Collision struct to contain collsion information for the physics engine
-typedef struct{
-	I2Vect dimesion;
-	F2Vect offset;
-} Collision;
 //Context struct to contain context information for the renderer
 typedef struct{
-	I2Vect dimesion;
-	F2Vect offset;
-	int colour;
 	int alpha;
+	int colour;
+	SDL_FRect shape;
 	Style style;
 } Context;
 
 //Represents a singular object
 typedef struct {
 	int id;
-	ObjectType objType;
-	Collision coll;
+	SDL_FRect collShape;
 	Context ctx;
 	F2Vect loc;
+	ObjectType objType;
 } Object;
 
 //Contains the scene of a game level
 typedef struct{
-	Object* objArr;
 	int size;
+	Object* objArr;
 } Scene;
 
 
 typedef struct {
 	int objId; //Its id number in the Scene struct
+	Key* keys;
+	PlayerState pState;
 	F2Vect velocity;
-	PlayerState state;
-	Key* key;
 } Player;
 
 #endif

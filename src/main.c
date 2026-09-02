@@ -58,7 +58,7 @@ SDL_AppResult SDL_AppIterate(void *appstate) {
 	
     /* clear the window to the draw color. */
     //SDL_RenderClear(renderer);
-    renderCurrentFrame(&sceneOne, renderer);
+    renderCurrentFrame(renderer, &sceneOne);
     /* put the newly-cleared rendering on the screen. */
     //SDL_RenderPresent(renderer);
 
@@ -73,13 +73,10 @@ void SDL_AppQuit(void *appstate, SDL_AppResult result)
 
 Scene loadScene(){
 	Object obj;
-	I2Vect tempDim = {2,2};
 	F2Vect tempOffSet = {1.0,1.0};
-	Collision coll = {tempDim, tempOffSet};
-	Context ctx = {tempDim, tempOffSet, 100, 100, SOLID};
-	F2Vect temp = {2.0,2.0};
+	Context ctx = { 100, 100, (SDL_FRect){2.0,2.0,2.0,2.0},SOLID};
 	obj.id = 0;
-	obj.loc = temp;
+	obj.loc = (F2Vect){2.0,2.0};
 	obj.objType = TERRAIN;
 	Scene scene;
 	scene.objArr = &obj;
@@ -89,8 +86,8 @@ Scene loadScene(){
 
 void setPlayer(){
 	player.objId = 1;
-	player.state = GROUND;
+	player.pState = GROUND;
 	player.velocity = (F2Vect) {2.0,2.0};
-	player.key = NULL;
+	player.keys = NULL;
 }
 

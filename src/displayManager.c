@@ -5,7 +5,7 @@
 #include "structLib.h"
 #include "displayManager.h"
 
-void renderCurrentFrame(Scene* scene, SDL_Renderer* renderer){
+void renderCurrentFrame(SDL_Renderer* renderer, Scene* scene){
 	SDL_SetRenderDrawColor(renderer,0, 0, 0, 0);
 	SDL_RenderClear(renderer);
 	//int size = scene->size;
